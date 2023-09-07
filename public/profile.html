@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/profile.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Get Appointment</title>
+</head>
+<body>
+    <nav data-id="{%RenderId%}">
+        <h4>Get Appointment</h4>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/login.html">Login</a></li>
+            <li><a href="/register.html">Register</a></li>
+        </ul>    
+    </nav>
+    <div class="container">
+        <div class="working-time">
+            <h4 class="heading">Working Hours: </h4>
+            <div class="starting-time-container">
+                <label for="Opening hour">Start Time: </label>
+                <input type="time" class="starting-time" name="starting-time" id="starting-time" disabled="true">
+            </div>
+            <div class="lunch-starting-time-container">
+                <label for="Lunch Start hour">Lunch Start Time: </label>
+                <input type="time" class="lunch-starting-time" name="lunch-starting-time" id="lunch-starting-time" disabled="true">
+            </div>
+            <div class="lunch-ending-time-container">
+                <label for="Lunch End hour">Lunch End Time: </label>
+                <input type="time" class="lunch-ending-time" name="lunch-ending-time" id="lunch-ending-time" disabled="true">
+            </div>
+            <div class="ending-time-container">
+                <label for="Ending hour">End Time: </label>
+                <input type="time" class="ending-time" name="ending-time" id="ending-time" disabled="true">
+            </div>
+            <button class="edit-working-hours" onclick="editUpdateTiming(event)">Edit</button>
+        </div>
+        <div style="margin: auto;margin-top: 2rem;">
+            <h2>Working Days:</h2>
+        </div>
+        <div class="calendar">
+            <header>September</header>
+            <div class="calendar-body">
+                <ul class="days-name">
+                    <li>Sun</li>
+                    <li>Mon</li>
+                    <li>Tue</li>
+                    <li>Wed</li>
+                    <li>Thu</li>
+                    <li>Fri</li>
+                    <li>Sat</li>
+                </ul>
+                <ul class="days-number">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                    <li>14</li>
+                    <li>15</li>
+                    <li>16</li>
+                    <li>17</li>
+                    <li>18</li>
+                    <li>19</li>
+                    <li>20</li>
+                    <li>21</li>
+                    <li>22</li>
+                    <li>23</li>
+                    <li>24</li>
+                    <li>25</li>
+                    <li>26</li>
+                    <li>27</li>
+                    <li>28</li>
+                    <li>29</li>
+                    <li>30</li>
+                    <li>31</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/script/profile.js"></script>
+    <script src="./assets/script/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>

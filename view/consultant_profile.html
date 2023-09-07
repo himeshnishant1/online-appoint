@@ -1,0 +1,40 @@
+<div class="working-time">
+    <h4 class="heading">Working Hours: </h4>
+    <div class="starting-time-container">
+        <label for="Opening hour">Start Time: </label>
+        <input type="time" class="starting-time" name="starting-time" id="starting-time" disabled="true" value="{%RenderStartTime%}">
+    </div>
+    <div class="lunch-starting-time-container">
+        <label for="Lunch Start hour">Lunch Start Time: </label>
+        <input type="time" class="lunch-starting-time" name="lunch-starting-time" id="lunch-starting-time" disabled="true" value="{%RenderLunchStartTime%}">
+    </div>
+    <div class="lunch-ending-time-container">
+        <label for="Lunch End hour">Lunch End Time: </label>
+        <input type="time" class="lunch-ending-time" name="lunch-ending-time" id="lunch-ending-time" disabled="true" value="{%RenderLunchEndTime%}">
+    </div>
+    <div class="ending-time-container">
+        <label for="Ending hour">End Time: </label>
+        <input type="time" class="ending-time" name="ending-time" id="ending-time" disabled="true" value="{%RenderEndTime%}">
+    </div>
+    <button class="edit-working-hours" onclick="editUpdateTiming(event)">Edit</button>
+</div>
+<div style="margin: auto;margin-top: 2rem;">
+    <h2>Working Days:</h2>
+</div>
+<div class="calendar">
+    <header>{%RenderCurrentMonth%}</header>
+    <div class="calendar-body">
+        <ul class="days-name">
+            <li>Sun</li>
+            <li>Mon</li>
+            <li>Tue</li>
+            <li>Wed</li>
+            <li>Thu</li>
+            <li>Fri</li>
+            <li>Sat</li>
+        </ul>
+        <ul class="days-number">
+            {%RenderCurrentMonthDays%}
+        </ul>
+    </div>
+</div>
