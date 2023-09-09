@@ -500,14 +500,14 @@ app.get("/bookAppointment/getTimeSlots/:day", (req, res) => {
                         let i = sTime;
                         while(i + 30 <= lunchSTime){
                             const slotTime = getTimeInString(i) + " - " + getTimeInString(i + 30);
-                            const slot = `<div>${slotTime}</div>`;
+                            const slot = `<div onclick="bookAppointmentWithDayAndTimeSlot(event)">${slotTime}</div>`;
                             if(!availabilityStatus.dates[`${day}`][`${slotTime}`]) slots.push(slot);
                             i += 30;
                         }
 
                         i = lunchETime;
                         while(i + 30 <= eTime){
-                            const slot = `<div>${getTimeInString(i) + " - " + getTimeInString(i + 30)}</div>`;
+                            const slot = `<div onclick="bookAppointmentWithDayAndTimeSlot(event)">${getTimeInString(i) + " - " + getTimeInString(i + 30)}</div>`;
                             if(!availabilityStatus.dates[`${slot}`]) slots.push(slot);
                             i += 30;
                         }
@@ -521,10 +521,89 @@ app.get("/bookAppointment/getTimeSlots/:day", (req, res) => {
         });
     }
     catch(err){
-        // console.log(err);
-        // let errorPage = error_page.replace("{%RenderError%}", `${err}`);
-        res.status(500).send({status: "failed", message: `${err}`});
+        let errorPage = error_page.replace("{%RenderError%}", `${err}`);
+        res.status(500).send(errorPage);
     }
+});
+
+app.get("/bookAppointment/:day/:timeSlot", (req, res) => {
+    const day = req.params.day;
+    const timeSlot = req.params.timeSlot;
+    if(!req.cookies.token)  throw new Error("Login Credentials not found...");
+    const token = jwt.verify(req.cookies.token, "shhh");    
+    if(!req.cookies.appt)   throw new Error("Something went wrong...");
+    const appointment_token = jwt.verify(req.cookies.appt, "shhh");
+    
+    db.query(`SELECT * FROM Consultants WHERE email=?`,[appointment_token.email], (err, result) => {
+        if(err) res.status(500).json({status: "failed", message: `${error}`});
+        else{
+            const cdata = result[0];
+            let availabilityStatus = JSON.parse(cdata.availability_status);
+            if(!availabilityStatus.dates[`${day}`][`${timeSlot}`]){
+
+                const times = availabilityStatus.times;
+                let sTime = times[0];
+                sTime = (sTime.substring(0, 2) * 60) + (sTime.substring(3, 5) * 1);
+                let lunchSTime = times[1];
+                lunchSTime = (lunchSTime.substring(0, 2) * 60) + (lunchSTime.substring(3, 5) * 1);
+                let lunchETime = times[2];
+                lunchETime = (lunchETime.substring(0, 2) * 60) + (lunchETime.substring(3, 5) * 1);
+                let eTime = times[3];
+                eTime = (eTime.substring(0, 2) * 60) + (eTime.substring(3, 5) * 1);
+
+                const timeArray = timeSlot.split("-");
+                timeArray[0] = timeArray[0].trim();
+                timeArray[1] = timeArray[1].trim();
+                const ltl = (timeArray[0].substring(0, 2) * 60) + (timeArray[0].substring(3, 5) * 1);
+                const utl = (timeArray[1].substring(0, 2) * 60) + (timeArray[1].substring(3, 5) * 1);
+
+                if((ltl >= sTime && utl <= lunchSTime) || (ltl >= lunchETime && utl <= eTime)){
+                    db.query(`SELECT * FROM Users WHERE email=?`, [token.email], (error, result) => {
+                        if(error)   res.status(500).json({status: "failed", message: `${error}`});
+                        else{
+                            let udata = JSON.parse(result[0].appointments);
+                            const curMonth= new Date(Date.now()).getMonth();
+                            const months = ["January", "February", "March", "April","May","June","July", "August", "September", "October", "November", "December"];
+                            if(udata === null || udata.month !== months[curMonth]){
+                                udata = {month: months[curMonth], dates: {}};
+                                db.query(`UPDATE Users SET appointments=? WHERE id=?`, [JSON.stringify(udata), token.id], (error) => {
+                                    if(error)  res.status(500).json({status: "failed", message: `${error}`});
+                                });
+                            }
+                            if(udata.dates[`${day}`]){
+                                if(udata.dates[`${day}`][`${timeSlot}`]){
+                                    res.status(500).json({status: "failed", message: "You Already has an Appointment with in Time Slot please choose another time slot!!"});
+                                    return;
+                                }
+                                else{
+                                    udata.dates[`${day}`][`${timeSlot}`] = `${cdata.email}`;
+                                }
+                            }
+                            else{
+                                const dates = JSON.parse(`{"${timeSlot}" : "${cdata.email}"}`);
+                                udata.dates[`${day}`] = dates;
+                            }
+                            db.query(`UPDATE Users SET appointments=? WHERE id=?`, [JSON.stringify(udata), token.id], (error) => {
+                                if(error)   res.status(500).json({status: "failed", message: `${error}`});
+                                else{
+                                    availabilityStatus.dates[`${day}`][`${timeSlot}`] = token.email;
+                                    db.query(`UPDATE Consultants SET availability_status=? WHERE email=?`, [JSON.stringify(availabilityStatus), appointment_token.email], (error) => {
+                                        if(error)   res.status(500).json({status: "failed", message: `${error}`});
+                                        else{
+                                            res.status(200).json({status: "ok", message: `<h3>Appointment Booking Success on ${day} ${months[curMonth]} time Slot: ${timeSlot}</h3>`});
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+                else    res.status(500).json({status: "failed", message: "Time Slot not available!!"});
+
+            }
+            else    res.status(500).json({status: "failed", message: "Time Slot not available!!"});
+        }
+    });
 });
 
 const port = 8070;
