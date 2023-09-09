@@ -1,7 +1,27 @@
 function clickableDate(event){
     event.preventDefault();
     if(event.target.classList.contains("selected-date")){
-        event.target.classList.remove("selected-date");
+        const body = {
+            dates: event.target.innerHTML
+        }
+        fetch("/update/dates", {
+                method: "PATCH",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            .then(response => response.json())
+            .then(response => {
+                if(response.status === "ok"){
+                    console.log("Date Removed!!");
+                    event.target.classList.remove("selected-date");
+                }
+                else    console.log(response.message);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
     else{
         const body = {
@@ -16,13 +36,46 @@ function clickableDate(event){
             })
             .then(response => response.json())
             .then(response => {
-                if(response.status === "ok")    event.target.classList.add("selected-date");
+                if(response.status === "ok"){
+                    console.log("Date Added!!");
+                    event.target.classList.add("selected-date");
+                }
                 else    console.log(response.message);
             })
             .catch(err => {
                 console.log(err);
             });
     }
+}
+
+function ChooseDate(event){
+    event.preventDefault();
+    const day = event.target.innerHTML;
+    fetch(`/bookAppointment/getTimeSlots/${day}`, {
+            method: "get"
+        })
+        .then(response => response.json())
+        .then(response => {
+            const slots = response.slots;
+            const chooseDate = document.querySelector(".choose-time");
+            chooseDate.innerHTML = "";
+            slots.forEach(slot => chooseDate.innerHTML += slot);
+            document.querySelector(".calendar").style.display = "none";
+            document.querySelector(".back-button").style.display = "block";
+            chooseDate.style.display = "flex";
+            document.querySelector(".container h2").innerHTML = "Choose a Time Slot";
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+function showCalendar(event){
+    event.preventDefault();
+    document.querySelector(".back-button").style.display = "none";
+    document.querySelector(".container h2").innerHTML = "Choose a Day";
+    document.querySelector(".calendar").style.display = "block";
+    document.querySelector(".choose-time").style.display = "none";
 }
 
 const editUpdateButton = document.querySelector(".edit-working-hours");
@@ -138,7 +191,7 @@ function editUpdateTiming(event){
         else{
 
             const body = {
-                times: [`${sTime}`, `${lunchETime}`, `${lunchETime}`, `${eTime}`]
+                times: [`${sTime}`, `${lunchSTime}`, `${lunchETime}`, `${eTime}`]
             };
 
             // times Update Api Request.

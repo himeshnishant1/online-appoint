@@ -1,0 +1,22 @@
+.token-generator-container{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+.get-token-btn{
+    padding: 1.0rem;
+    border-radius: 1.0rem;
+    background-color: green;
+    color: white;
+    margin: 1.0rem auto;
+}
+
+.getTokenUrl{
+    padding: 1.0rem;
+    color: green;
+}
+
+.getTokenOnly{
+    padding: 1.0rem;
+    color: green;
+}

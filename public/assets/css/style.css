@@ -58,4 +58,61 @@ nav ul li a:hover{
     margin: auto 40px;
 }
 
+.container .calendar{
+    width: 600px;
+    height: 600px;
+    margin: 1.1rem auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px 2px #a458eb;
+}
+
+.container .calendar header{
+    margin: auto;
+    padding: 10px;
+    width: max-content;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.container .calendar .calendar-body{
+    display: flex;
+    flex-flow: column;
+}
+
+.container .calendar .calendar-body ul{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.container .calendar .calendar-body ul li{    
+    width: calc(100% / 7 - 1.2%);  
+    margin: 10px 2px;
+    padding: 1.2rem 0;
+    user-select: none;
+    border-radius: 20px;
+}
+
+.container .calendar .calendar-body ul li.inactive{    
+    color:rgb(168, 168, 168);
+}
+
+.container .calendar .calendar-body ul li.selected-date{    
+    background-color:rgb(22, 185, 49);
+}
+
+.container .calendar .calendar-body ul.days-number li:hover{    
+    /*background-color: rgb(183, 183, 184);*/
+    color: rgb(128, 219, 10);
+    cursor: pointer;
+    padding: 1.05rem 0;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
 
