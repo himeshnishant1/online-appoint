@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     margin: auto 0;
-    padding: 0.0rem;
+    padding: 0.5rem;
 }
 
 .container .working-time{
@@ -50,40 +50,4 @@
     border: none;
     border-radius: 0.5rem;
     border: 1px solid gray;
-}
-
-.container .back-button{
-    display: none;
-    margin: 1.0rem auto;
-    padding: 1.0rem;
-    border: none;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px 2px #a458eb;
-}
-
-.container .choose-time{
-    display: none;
-    margin: 1.0rem auto;
-    padding: 1.0rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px 2px #a458eb;
-    flex-direction: row;
-    flex-flow: wrap;
-    justify-content: space-evenly;
-}
-
-.container .choose-time div{
-    width: max-content;
-    margin: 1.0rem;
-    padding: 1.0rem;
-    border-radius: 0.5rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    box-shadow: 0 0 10px 2px #a458eb;
-}
-
-.container .choose-time div:hover{
-    background-color: rgb(29, 163, 29);
-    color: white;
-    cursor: pointer;
 }

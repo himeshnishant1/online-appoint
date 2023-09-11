@@ -20,3 +20,69 @@
     padding: 1.0rem;
     color: green;
 }
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+    padding: 0.5rem;
+}
+
+.container .get-started{
+    display: flex;
+    flex-direction: row;
+    margin: auto 1.0rem;
+    padding: 1.0rem;
+}
+
+.container .back-button{
+    display: none;
+    margin: 1.0rem auto;
+    padding: 1.0rem;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px 2px #a458eb;
+}
+
+.container .choose-time{
+    display: none;
+    margin: 1.0rem auto;
+    padding: 1.0rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px 2px #a458eb;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+}
+
+.container .choose-time div{
+    width: max-content;
+    margin: 1.0rem;
+    padding: 1.0rem;
+    border-radius: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    box-shadow: 0 0 10px 2px #a458eb;
+}
+
+.container .choose-time div:hover{
+    background-color: rgb(29, 163, 29);
+    color: white;
+    cursor: pointer;
+}
+
+.container .meeting-cards{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.container .meeting-cards .card{
+    display: flex;
+    width: calc(95% / 2);
+    flex-direction: column;
+    margin: 1.0rem;
+}

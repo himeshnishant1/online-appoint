@@ -32,7 +32,7 @@ try{
                 else{
                     message.style.display = "block";
                     message.style.color = "red";
-                    message.innerText = "Something wrong happened. Please try again later.";
+                    message.innerText = response.message;
                 }
             })
             .catch(err => {
@@ -62,4 +62,62 @@ try{
 }
 catch(err){
     console.log(err);
+}
+
+let chooseDay;
+let chooseTimeSlot;
+
+function ChooseDate(event){
+    event.preventDefault();
+    chooseDay = event.target.innerHTML;
+    const day = event.target.innerHTML;
+    fetch(`/bookAppointment/getTimeSlots/${day}`, {
+            method: "get"
+        })
+        .then(response => response.json())
+        .then(response => {
+            if(response.status === "ok"){
+                const slots = response.slots;
+                const chooseDate = document.querySelector(".choose-time");
+                chooseDate.innerHTML = "";
+                slots.forEach(slot => chooseDate.innerHTML += slot);
+                document.querySelector(".calendar").style.display = "none";
+                document.querySelector(".back-button").style.display = "block";
+                chooseDate.style.display = "flex";
+                document.querySelector(".container h2").innerHTML = "Choose a Time Slot";
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+function showCalendar(event){
+    event.preventDefault();
+    document.querySelector(".choose-time").innerHTML = "";
+    document.querySelector(".back-button").style.display = "none";
+    document.querySelector(".container h2").innerHTML = "Choose a Day";
+    document.querySelector(".calendar").style.display = "block";
+    document.querySelector(".choose-time").style.display = "none";
+}
+
+function bookAppointmentWithDayAndTimeSlot(event){
+    event.preventDefault();
+    chooseTimeSlot = event.target.innerHTML;
+    fetch(`/bookAppointment/${chooseDay}/${chooseTimeSlot}`, {
+            method: "GET"
+        })
+        .then(response => response.json())
+        .then(response => {
+            if(response.status === "ok"){
+                alert(response.message);
+                window.location.href = "/"
+            }
+            else if(response.status === "failed"){
+                alert(response.message);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }

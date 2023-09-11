@@ -37,10 +37,17 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" required>
+                        <div class="form-group mt-3 otp-check-group" style="display: none;flex-direction:row;justify-content: space-between;">
+                            <input type="number" min="0000" max="9999" class="form-control otp-input" id="otpInput" style="width: 50%;" placeholder="Enter OTP">
+                        </div>
+                        <div class="form-group mt-3" style="display: flex;flex-direction:row;justify-content: space-between;">
+                            <button type="button" class="form-control getOtp" style="width: 30%;">Get OTP</button>
+                            <p class="form-label otp-message" style="display:none;width: 50%;margin: auto;">Message Sample display</p>
+                        </div>
                     </div>
                     <div class="mb-3">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="password" required>
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
                     </div>
                     <div class="mv-3 reg-type" style="display: flex;">
                         <div class="mb-3 form-check">
@@ -56,7 +63,7 @@
                             </label>
                         </div>
                     </div>
-                    <button type="submit" class="mt-3 btn btn-primary">Register</button>
+                    <button type="submit" class="mt-3 btn btn-primary register-btn">Register</button>
                 </form>
             </div>
         </div>

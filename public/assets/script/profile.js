@@ -1,6 +1,3 @@
-let chooseDay;
-let chooseTimeSlot;
-
 function clickableDate(event){
     event.preventDefault();
     if(event.target.classList.contains("selected-date")){
@@ -20,7 +17,7 @@ function clickableDate(event){
                     console.log("Date Removed!!");
                     event.target.classList.remove("selected-date");
                 }
-                else    console.log(response.message);
+                else    alert(response.message);
             })
             .catch(err => {
                 console.log(err);
@@ -43,66 +40,12 @@ function clickableDate(event){
                     console.log("Date Added!!");
                     event.target.classList.add("selected-date");
                 }
-                else    console.log(response.message);
+                else    alert(response.message);
             })
             .catch(err => {
                 console.log(err);
             });
     }
-}
-
-function ChooseDate(event){
-    event.preventDefault();
-    chooseDay = event.target.innerHTML;
-    const day = event.target.innerHTML;
-    fetch(`/bookAppointment/getTimeSlots/${day}`, {
-            method: "get"
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-            if(response.status === "ok"){
-                const slots = response.slots;
-                const chooseDate = document.querySelector(".choose-time");
-                chooseDate.innerHTML = "";
-                slots.forEach(slot => chooseDate.innerHTML += slot);
-                document.querySelector(".calendar").style.display = "none";
-                document.querySelector(".back-button").style.display = "block";
-                chooseDate.style.display = "flex";
-                document.querySelector(".container h2").innerHTML = "Choose a Time Slot";
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
-
-function showCalendar(event){
-    event.preventDefault();
-    document.querySelector(".back-button").style.display = "none";
-    document.querySelector(".container h2").innerHTML = "Choose a Day";
-    document.querySelector(".calendar").style.display = "block";
-    document.querySelector(".choose-time").style.display = "none";
-}
-
-function bookAppointmentWithDayAndTimeSlot(event){
-    event.preventDefault();
-    chooseTimeSlot = event.target.innerHTML;
-    fetch(`/bookAppointment/${chooseDay}/${chooseTimeSlot}`, {
-            method: "GET"
-        })
-        .then(response => response.json())
-        .then(response => {
-            if(response.status === "ok"){
-                console.log(response.message);
-            }
-            else if(response.status === "failed"){
-                console.log(response.message);
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
 }
 
 const editUpdateButton = document.querySelector(".edit-working-hours");
